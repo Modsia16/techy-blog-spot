@@ -1,19 +1,26 @@
-<form action="/register" method="post">
-  <fieldset>
-    <legend>Login Form</legend>
-    <div>
-      <label for="username">Username</label>
-      <input name="username" id="username" type="text" />
+<div class="card">
+
+  <h2 class="card-header">Signup</h2>
+
+  <form class="card-body signup-form">
+
+    <div class="form-group">
+      <label class="form-label">Username:</label>
+      <input class="form-input" type="text" id="username-input-signup" />
     </div>
-    <div>
-      <label for="password">Password</label>
-      <input name="password" id="password" type="password" />
+
+    <div class="form-group">
+      <label class="form-label">Password:</label>
+      <input class="form-input" type="password" id="password-input-signup" />
     </div>
-    <div>
-      <label for="bio">User Bio</label>
-      <textarea name="bio" id="bio" cols="30" rows="10">
-      </textarea>
+
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit">SIGN UP</button>
     </div>
-    <input type="submit" value="Register" />
-  </fieldset>
-</form>
+
+  </form>
+      <br>
+    <a href="/login">Login Instead</a>
+
+</div>
+<script src="/js/signup.js"></script>

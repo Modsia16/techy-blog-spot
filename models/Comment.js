@@ -10,8 +10,7 @@ Comment.init({
     comment_text: {
         type: DataTypes.STRING,
         validate: {
-
-            len: [3]
+            len: [1, 255]
         }
     },
     user_id: {
@@ -26,7 +25,7 @@ Comment.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'post',
+            model: 'blogpost',
             key: 'id'
         }
     }

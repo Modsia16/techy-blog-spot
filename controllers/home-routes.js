@@ -1,58 +1,60 @@
+const sequelize = require('../config/connection');
 const router = require('express').Router();
-const sequelize = require('../config/connection')
 const { Blogpost, User, Comment } = require('../models');
+const withAuth = require('../utils/auth');
 
-router.get("/", (req, res) => {
-  const { user } = req.session;
-  res.render("home", { user });
+//home page posts
+router.get('/', async (req, res) => {
+try {
+  const blogpostData = await Blogpost.findAll({
+    include: [User],
+  });
+  const blogposts = blogpostData.map((blogpost) => blogpost.get({ plain: true }));
+  res.render('all-posts-admin', {blogposts, loggedIn: req.session.loggedIn});
+} catch (err) {
+  res.status(500).send({ error: 'Could not retrieve blog posts' });
+}
 });
 
-router.get("/login", (req, res) => {
-  const { user } = req.session;
-  res.render("login", { user });
-});
 
-router.post("/login", async (req, res) => {
+//single post
+router.get("/post/:id", async (req, res) => {
   try {
-    const userData = await User.findOne({
-      where: { username: req.body.username },
+    const blogpostData = await Blogpost.findOne({
+      include: 
+      [
+        User,
+        {
+          model: Comment,
+          include: [User]
+        }
+      ],
     });
-
-    if (!userData) {
-      return res.render("login", { message: "user not found" });
-    }
-
-    const isValid = await userData.checkPass(req.body.password);
-
-    if (isValid) {
-      req.session.save(() => {
-        req.session.is_logged_in = true;
-        req.session.user = {
-          username: userData.username,
-          bio: userData.bio,
-        };
-        return res.redirect("/");
-      });
+    if (blogpostData) {
+      const blogpost = blogpostData.get({ plain: true });
+      res.render("single-post-admin", {blogpost, loggedIn: req.session.loggedIn});
     } else {
-      res.render("login", { message: "Unknown password" });
+      res.status(404).send({ error: 'Could not retrieve blog post' });
     }
   } catch (err) {
-    console.log(err);
+    res.status(500).send({ error: 'Could not retrieve blog post' });
   }
 });
-
-router.get("/register", (req, res) => {
-  res.render("register");
-});
-
-router.post("/register", async (req, res) => {
-  try {
-    const user = await User.create(req.body);
-    console.log(user);
-    res.redirect("/register");
-  } catch (err) {
-    console.log(err);
+      
+router.get('/login', (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect('/dash');
+    return;
   }
+  res.render('login');
 });
 
+router.get('/signup', (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect('/dash');
+    return;
+    }
+    res.render('signup');
+    });
+    
 module.exports = router;

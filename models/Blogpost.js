@@ -3,10 +3,10 @@ const sequelize = require ('../config/connection')
 
 class Blogpost extends Model {}
 
-Blogpost.init (
+Blogpost.init(
     {
      id: {
-         type: DataTypes.INTERGER,
+         type: DataTypes.INTEGER,
          allowNull: false,
          autoIncrement: true,
          primaryKey: true
@@ -14,27 +14,24 @@ Blogpost.init (
      title: {
          type: DataTypes.STRING,
          allowNull: false,
-         validate: {
-             len: [1, 50]
-         }
      },
-     entry: {
+     content: {
          type: DataTypes.TEXT,
          allowNull: false,
      },
-     date_published: {
-         type: DataTypes.DATE,
-         allowNull: false,
-         defaultValue: DataTypes.NOW
-     },
-     author: {
-        type: DataTypes.INTERGER,
+     dateCreated: {
+            type: DataTypes.DATEONLY,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+    user_id: {
+        type: DataTypes.INTEGER,
         references: {
-            model:'user',
+            model: 'user',
             key: 'id'
         }
-     },
-    },
+    }
+},
     {
         sequelize,
         timestamps: false,
