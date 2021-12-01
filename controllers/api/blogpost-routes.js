@@ -1,58 +1,37 @@
-router = require('express').Router();
+const router = require('express').Router();
 const { Blogpost } = require('../../models/');
 const withAuth = require('../../utils/auth');
 
-//post a blogpost
 router.post('/', withAuth, async (req, res) => {
-    const body = req.body;
     try {
-        newBlogpost = await Blogpost.create({...body, user_id: req.session.user_id});
-        res.json(newBlogpost);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
+        const newPost = await Blogpost.create({
+        ...req.body,
+        user_id: req.session.user_id,
+    });
+    res.status(200).json(newPost);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
     }
 });
 
-//update a blogpost
-router.put('/:id', withAuth, async (req, res) => {
-    try {
-        const [affectedRows] = await Blogpost.update(req.body, {
-            where: {
-                id: req.params.id,
-            },
-        });
-        if (affectedRows) {
-            res.json({
-                message: 'Blogpost successfully updated',
-            });
-        } else {
-            res.status(404).json({ message: 'No blogpost found with this id' });
-        }
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
-    }           
-});
-
-// delete a blogpost
 router.delete('/:id', withAuth, async (req, res) => {
     try {
-        const [affectedRows] = await Blogpost.destroy({
-            where: {
-                id: req.params.id,
-            },
+        const postData = await Blogpost.destroy({
+        where: {
+            id: req.params.id,
+            user_id: req.session.user_id,
+        },
+    });
+    if (!postData) {
+        res.status(404).json({
+        message: 'Post not found',
         });
-        if (affectedRows) {
-            res.json({
-                message: 'Blogpost successfully deleted',
-            });
-        } else {
-            res.status(404).json({ message: 'No blogpost found with this id' });
-        }
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
+        return;
+    }
+    res.status(200).json(postData);
+    } catch (error) {
+        res.status(500).json(error);
     }
 });
 

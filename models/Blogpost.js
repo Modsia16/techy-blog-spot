@@ -16,13 +16,13 @@ Blogpost.init(
          allowNull: false,
      },
      content: {
-         type: DataTypes.TEXT,
+         type: DataTypes.STRING,
          allowNull: false,
      },
-     dateCreated: {
-            type: DataTypes.DATEONLY,
-            allowNull: false,
+     date_created: {
+            type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
+            allowNull: false
         },
     user_id: {
         type: DataTypes.INTEGER,

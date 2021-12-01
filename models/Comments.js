@@ -7,10 +7,14 @@ Comment.init({
         primaryKey: true,
         autoIncrement: true
     },
-    comment_text: {
+    commenter_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    comment: {
         type: DataTypes.STRING,
         validate: {
-            len: [1, 255]
+            len: [1]
         }
     },
     user_id: {
@@ -21,18 +25,16 @@ Comment.init({
             key: 'id'
         }
     },
-    post_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'blogpost',
-            key: 'id'
-        }
+    date_created: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        allowNull: false
     }
-}, {
+}, 
+{
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: 'comment'
+    modelName: 'blogpost'
 });
 module.exports = Comment;

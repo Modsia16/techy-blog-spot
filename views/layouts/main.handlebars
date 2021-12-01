@@ -1,27 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Simple Tech Blog Site</title>
-  <link rel="stylesheet" href="/css/jass.css">
-  <link rel="stylesheet" href="/css/style.css">
+  <meta charset="utf-8">
+  <title>Tech Blog Home</title>
+ <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
-  <div class="flex-column justify-space-around">
-    <header class="display-flex justify-space-between align-center p-2">
-      <h1>
-        Tech Blog Site
-  </h1>
-        <nav>
-          <ul>
-          <li><a href="/login">Login</a></li>
-      </ul>
+
+      <nav id="navbar">
+        <h1 id="nav-header">Tech Blog</h1>
+          <ul id="navbar-ul">
+            <li>
+                <p><a class="link" href="/">Home</a></p>
+            </li>
+        {{#if loggedIn}}
+        <li>
+            <p><a class="link" href="/profile">Dashboard</a></p>
+        </li>
+        <li>
+        <p><a class="link" href="/logout">Login</a></p>
+        <button class="no-button" id="logout">logout</button>
+        </li>
+        </ul>
+        {{else}}
+        <li>
+            <p><a class="link" href="/login">Login</a></p>
+          
+        </li>
+        {{/if}}
+        <ul>
       </nav>
-     
-    </header>
-      <main class="container container-fluid mt-5">
-        {{{ body }}}
-      </main>
-  </div>
-  </body>
+      {{{ body }}}
+
+
+{{#if loggedIn}}
+  <script src="/js/logout.js"></script>
+{{/if}}
+</body>
 
 </html>
