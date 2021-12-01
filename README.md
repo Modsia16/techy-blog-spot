@@ -38,12 +38,28 @@ Given a CMS-style blog site
 
 ## Build
 
-Creating a file structure that follows MVC logic Creating server, controller, database, handlebars main. Set up server, controllers, db, seeds, views, utils and helper folders. Add some empty file folders for model creation Set up node, npm and dependencies in terminal. Database set up along with git iginore and env. Fixed helpers file, was not labeled js. Commented out some code for the controller index testing on port via insomnia. Started creating Models for user and blogposts. Having some difficulty with home route matching up with some of the node modules when restarting npm. Having issues with node modules, need to uninstall and reinstall. Will troubleshoot and resubmit. 
+Creating a file structure that follows MVC logic Creating server, controller, database, handlebars main. Set up server, controllers, db, seeds, views, utils and helper folders. Add some empty file folders for model creation Set up node, npm and dependencies in terminal. Database set up along with git iginore and env. Fixed helpers file, was not labeled js. Commented out some code for the controller index testing on port via insomnia. Started creating Models for user and blogposts. Having some difficulty with home route matching up with some of the node modules when restarting npm. Having issues with node modules, need to uninstall and reinstall on git. Previously there were 4 commits on the old simple-tech-blog. Will troubleshoot and resubmit. 
+
+After relaunching and reworking some code I was able to get the home, login and logout functioning and will launch to heroku.
+
+Future work: get dashboard/profile of the blog functioning. 
 
 ## Installation
 
+npm i
+mysql -u root -p
+SOURCE ./db/schema.sql
+exit
+npm run seed
+npm start
 
 ## Demo
 
-![demo](./assets)
+![demo](./assets/Homepg.png)
+
+![demo](./assets/login-signup.png)
+
+![demo](./assets/logged-in.png)
+
+![heroku-link] https://techy-blog-spot.herokuapp.com/
 
